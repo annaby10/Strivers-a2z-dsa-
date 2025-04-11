@@ -1,0 +1,26 @@
+//Solved Max sum of subarray problem using Sliding window technique
+//Curr sum=currsum-arr[i-k]+arr[i]
+
+public class Maxsumsubarray {
+    public static int slideWindow(int arr[], int k, int n) {
+        int currSum = 0;
+        for (int i = 0; i < k; i++) {
+            currSum += arr[i];
+        }
+        int maxSum = currSum;
+        for (int i = k; i < n; i++) {
+            currSum = currSum + arr[i] - arr[i - k];
+            maxSum = Math.max(currSum, maxSum);
+        }
+        return maxSum;
+    }
+
+    public static void main(String[] args) {
+        int arr[] = { 2, 1, 5, 3, 1, 2 };
+        int n = arr.length;
+        int k = 3;
+
+        int result = slideWindow(arr, k, n);
+        System.out.println("Max sum of subarray is : " + result);
+    }
+}
