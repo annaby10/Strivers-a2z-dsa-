@@ -1,0 +1,28 @@
+//Use a counter Open to keep track of parenthesis.StringBuilder to store result
+
+class Solution {
+    public static String outerParenthesis(String s) {
+        int open = 0;
+        StringBuilder result = new StringBuilder();
+        for (char ch : s.toCharArray()) {
+            if (ch == '(') {
+                if (open > 0) {
+                    result.append(ch);
+                }
+                open++;
+            } else {
+                open--;
+                if (open > 0) {
+                    result.append(ch);
+                }
+            }
+        }
+        return result.toString();
+    }
+
+    public static void main(String[] args) {
+        String s = "(()())(())";
+        String result = outerParenthesis(s);
+        System.out.println("After removal of outer parenthesis : " + result);
+    }
+}
