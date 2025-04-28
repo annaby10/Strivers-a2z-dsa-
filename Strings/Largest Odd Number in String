@@ -1,0 +1,28 @@
+public class Solution {
+    public String largestOddNumber(String s) {
+        int n = s.length();
+        
+        // Traverse from end
+        for (int i = n - 1; i >= 0; i--) {
+            char ch = s.charAt(i);
+            if ((ch - '0') % 2 == 1) {
+                // Found an odd digit
+                String result = s.substring(0, i + 1);
+                // Remove leading zeros
+                result = removeLeadingZeros(result);
+                return result;
+            }
+        }
+        
+        // No odd digit found
+        return "";
+    }
+    
+    private String removeLeadingZeros(String str) {
+        int i = 0;
+        while (i < str.length() && str.charAt(i) == '0') {
+            i++;
+        }
+        return i == str.length() ? "0" : str.substring(i);
+    }
+}
