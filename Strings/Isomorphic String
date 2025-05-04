@@ -1,0 +1,52 @@
+ou're given two strings s and t.
+The task is to check if the two strings are isomorphic.
+
+👉 Two strings are isomorphic if you can replace characters in s to get t such that:
+
+Each character in s maps to exactly one character in t.
+
+No two characters in s can map to the same character in t.
+
+Character mapping must be consistent (i.e., all 'a's in s map to the same character in t).
+
+
+
+
+
+import java.util.HashMap;
+
+public class IsomorphicStrings {
+    public static boolean isIsomorphic(String s, String t) {
+        if (s.length() != t.length()) return false;
+
+        HashMap<Character, Character> mapST = new HashMap<>();
+        HashMap<Character, Character> mapTS = new HashMap<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            char chS = s.charAt(i);
+            char chT = t.charAt(i);
+
+            if (mapST.containsKey(chS)) {
+                if (mapST.get(chS) != chT)
+                    return false;
+            } else {
+                mapST.put(chS, chT);
+            }
+
+            if (mapTS.containsKey(chT)) {
+                if (mapTS.get(chT) != chS)
+                    return false;
+            } else {
+                mapTS.put(chT, chS);
+            }
+        }
+
+        return true;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isIsomorphic("egg", "add"));   // true
+        System.out.println(isIsomorphic("foo", "bar"));   // false
+        System.out.println(isIsomorphic("paper", "title"));// true
+    }
+}
