@@ -1,4 +1,4 @@
-ou're given two strings s and t.
+You're given two strings s and t.
 The task is to check if the two strings are isomorphic.
 
 👉 Two strings are isomorphic if you can replace characters in s to get t such that:
