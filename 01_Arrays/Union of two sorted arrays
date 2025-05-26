@@ -1,0 +1,64 @@
+1.Use ArrayList
+2.Two pointer technique 
+3.Take advsntage of the sorted arrays and reduce complexity
+
+
+import java.util.*;
+
+public class UnionSortedArrays {
+
+    public static List<Integer> union(int[] arr1, int[] arr2) {
+        int i = 0, j = 0;
+        List<Integer> result = new ArrayList<>();
+
+        while (i < arr1.length && j < arr2.length) {
+            int a = arr1[i];
+            int b = arr2[j];
+
+            if (a == b) {
+                // Add only if it's not a duplicate
+                if (result.isEmpty() || result.get(result.size() - 1) != a) {
+                    result.add(a);
+                }
+                i++;
+                j++;
+            } else if (a < b) {
+                if (result.isEmpty() || result.get(result.size() - 1) != a) {
+                    result.add(a);
+                }
+                i++;
+            } else { // a > b
+                if (result.isEmpty() || result.get(result.size() - 1) != b) {
+                    result.add(b);
+                }
+                j++;
+            }
+        }
+
+        // Add remaining elements from arr1
+        while (i < arr1.length) {
+            if (result.isEmpty() || result.get(result.size() - 1) != arr1[i]) {
+                result.add(arr1[i]);
+            }
+            i++;
+        }
+
+        // Add remaining elements from arr2
+        while (j < arr2.length) {
+            if (result.isEmpty() || result.get(result.size() - 1) != arr2[j]) {
+                result.add(arr2[j]);
+            }
+            j++;
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] arr1 = {1, 2, 2, 3, 4};
+        int[] arr2 = {2, 3, 5, 6};
+
+        List<Integer> unionResult = union(arr1, arr2);
+        System.out.println("Union: " + unionResult);
+    }
+}
