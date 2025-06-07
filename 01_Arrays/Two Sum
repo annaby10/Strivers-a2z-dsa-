@@ -1,0 +1,59 @@
+ Check if a pair with given sum exists in Array
+
+Approach 1:Using Hashset
+
+import java.util.HashSet;
+
+public class PairWithSum {
+    public static boolean hasPairWithSum(int[] arr, int target) {
+        HashSet<Integer> seen = new HashSet<>();
+
+        for (int num : arr) {
+            int complement = target - num;
+            if (seen.contains(complement)) {
+                return true; // Pair found
+            }
+            seen.add(num);
+        }
+        return false; // No pair found
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {8, 4, 1, 6};
+        int target = 10;
+
+        System.out.println(hasPairWithSum(arr, target)); // true
+    }
+}
+Approach 2:Using Two pointer(sorted arrays)
+
+import java.util.Arrays;
+
+public class TwoPointerPair {
+    public static boolean hasPairWithSumSorted(int[] arr, int target) {
+        Arrays.sort(arr); // Sort the array
+
+        int left = 0, right = arr.length - 1;
+
+        while (left < right) {
+            int sum = arr[left] + arr[right];
+
+            if (sum == target) {
+                return true;
+            } else if (sum < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {8, 4, 1, 6};
+        int target = 10;
+
+        System.out.println(hasPairWithSumSorted(arr, target)); // true
+    }
+}
