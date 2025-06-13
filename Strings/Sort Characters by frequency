@@ -1,0 +1,36 @@
+You are given a string s. Return the array of unique characters, sorted by highest to lowest occurring characters.
+If two or more characters have same frequency then arrange them in alphabetic order.
+
+
+class Solution {
+    public String frequencySort(String s) {
+        Map<Character, Integer> freqMap = new HashMap<>();
+
+        // Count frequency
+        for (char c : s.toCharArray()) {
+            freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+        }
+
+        // Add unique characters to a list
+        List<Character> chars = new ArrayList<>(freqMap.keySet());
+
+        // Sort based on frequency desc, and alphabetically for ties
+        Collections.sort(chars, (a, b) -> {
+            int freqCompare = freqMap.get(b) - freqMap.get(a);
+            if (freqCompare == 0) {
+                return a - b; // alphabetically
+            }
+            return freqCompare;
+        });
+
+        // Build result string from sorted characters
+        StringBuilder result = new StringBuilder();
+        for (char c : chars) {int count = freqMap.get(c);
+            for (int i = 0; i < count; i++) {
+                result.append(c);
+            }
+        }
+
+        return result.toString();
+    }
+}
