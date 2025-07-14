@@ -49,35 +49,3 @@ public class HashMapTwoSumVariants {
     }
 }
 
-Approach 2:Using Two pointer(sorted arrays)
-
-import java.util.Arrays;
-
-public class TwoPointerPair {
-    public static boolean hasPairWithSumSorted(int[] arr, int target) {
-        Arrays.sort(arr); // Sort the array
-
-        int left = 0, right = arr.length - 1;
-
-        while (left < right) {
-            int sum = arr[left] + arr[right];
-
-            if (sum == target) {
-                return true;
-            } else if (sum < target) {
-                left++;
-            } else {
-                right--;
-            }
-        }
-
-        return false;
-    }
-
-    public static void main(String[] args) {
-        int[] arr = {8, 4, 1, 6};
-        int target = 10;
-
-        System.out.println(hasPairWithSumSorted(arr, target)); // true
-    }
-}
