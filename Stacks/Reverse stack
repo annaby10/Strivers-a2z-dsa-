@@ -1,0 +1,87 @@
+public class ReverseStack {
+
+    static class Node {
+        int data;
+        Node next;
+        Node(int data) {
+            this.data = data;
+        }
+    }
+
+    static class Stack {
+        Node top;
+
+        public boolean isEmpty() {
+            return top == null;
+        }
+
+        public void push(int data) {
+            Node newNode = new Node(data);
+            newNode.next = top;
+            top = newNode;
+        }
+
+        public int pop() {
+            if (isEmpty()) {
+                throw new RuntimeException("Stack Underflow");
+            }
+            int popped = top.data;
+            top = top.next;
+            return popped;
+        }
+
+        public int peek() {
+            if (isEmpty()) {
+                throw new RuntimeException("Stack is empty");
+            }
+            return top.data;
+        }
+
+        // ✅ Push element at the bottom of the stack
+        public void pushAtBottom(int data) {
+            if (isEmpty()) {
+                push(data);
+                return;
+            }
+            int topData = pop();
+            pushAtBottom(data);
+            push(topData);
+        }
+
+        // ✅ Reverse the stack
+        public void reverse() {
+            if (isEmpty()) return;
+
+            int topData = pop();         // Step 1: Pop top
+            reverse();                   // Step 2: Reverse rest
+            pushAtBottom(topData);       // Step 3: Push top at bottom
+        }
+
+        public void printStack() {
+            Node temp = top;
+            System.out.print("Top -> ");
+            while (temp != null) {
+                System.out.print(temp.data + " ");
+                temp = temp.next;
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        Stack s = new Stack();
+
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        s.push(4);
+
+        System.out.println("Original Stack:");
+        s.printStack(); // Top -> 4 3 2 1
+
+        s.reverse();
+
+        System.out.println("Reversed Stack:");
+        s.printStack(); // Top -> 1 2 3 4
+    }
+}
