@@ -1,0 +1,38 @@
+class Solution {
+    public void removeCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // Step 1: Detect cycle
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                break;
+            }
+        }
+
+        // No cycle found
+        if (fast == null || fast.next == null) {
+            return;
+        }
+
+        // Step 2: Find the start of the cycle
+        slow = head;
+        // Special case: if cycle starts at head
+        if (slow == fast) {
+            while (fast.next != slow) {
+                fast = fast.next;
+            }
+        } else {
+            while (slow.next != fast.next) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+        }
+
+        // Step 3: Remove the cycle
+        fast.next = null;
+    }
+}
