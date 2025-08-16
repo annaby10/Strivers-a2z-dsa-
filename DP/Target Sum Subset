@@ -1,0 +1,45 @@
+Tabulation
+
+public class TargetSumSubset {
+
+    // Function to check if a subset with target sum exists
+    public static boolean isSubsetSum(int[] arr, int target) {
+        int n = arr.length;
+
+        // dp[i][j] = true if we can form sum j using first i elements
+        boolean[][] dp = new boolean[n + 1][target + 1];
+
+        // Base Case 1: sum = 0 can always be achieved with empty subset
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = true;
+        }
+
+        // Base Case 2: with 0 elements, we cannot make positive sums
+        for (int j = 1; j <= target; j++) {
+            dp[0][j] = false;
+        }
+
+        // Fill the dp table
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= target; j++) {
+                // Option 1: Exclude current element
+                dp[i][j] = dp[i - 1][j];
+
+                // Option 2: Include current element if it <= j
+                if (arr[i - 1] <= j) {
+                    dp[i][j] = dp[i][j] || dp[i - 1][j - arr[i - 1]];
+                }
+            }
+        }
+
+        return dp[n][target]; // answer: can we form 'target' with all n elements?
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {2, 3, 7, 8, 10};
+        int target = 11;
+
+        boolean result = isSubsetSum(arr, target);
+        System.out.println("Is target sum possible? " + result);
+    }
+}
