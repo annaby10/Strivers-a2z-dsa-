@@ -1,0 +1,24 @@
+Recursion + Memoization
+
+public static int knapsackMemo(int[] wt, int[] val, int W) {
+    Integer[][] dp = new Integer[wt.length][W + 1];
+
+    return knapsackRecursive(0, W, wt, val, dp);  // inline solve here
+}
+
+private static int knapsackRecursive(int i, int w, int[] wt, int[] val, Integer[][] dp) {
+    if (i == wt.length || w == 0) return 0;
+    if (dp[i][w] != null) return dp[i][w];
+
+    int ans;
+    if (wt[i] > w) {
+        ans = knapsackRecursive(i + 1, w, wt, val, dp);
+    } else {
+        int skip = knapsackRecursive(i + 1, w, wt, val, dp);
+        int take = val[i] + knapsackRecursive(i + 1, w - wt[i], wt, val, dp);
+        ans = Math.max(skip, take);
+    }
+
+    dp[i][w] = ans;
+    return ans;
+}
