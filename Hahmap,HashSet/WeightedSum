@@ -1,0 +1,33 @@
+Given an array sort it in ascending order and find sum s such that it is multiplied by the no of position it moved from the original array.
+
+import java.util.*;
+
+public class WeightedMoveSum {
+    public static int weightedMoveSum(int[] arr) {
+        int n = arr.length;
+        Map<Integer, Integer> map = new HashMap<>();
+
+        // store original index for each element
+        for (int i = 0; i < n; i++) {
+            map.put(arr[i], i);
+        }
+
+        // make a sorted copy
+        int[] sorted = arr.clone();
+        Arrays.sort(sorted);
+
+        int total = 0;
+        for (int newIdx = 0; newIdx < n; newIdx++) {
+            int val = sorted[newIdx];
+            int oldIdx = map.get(val);
+            int moved = Math.abs(newIdx - oldIdx);
+            total += val * moved;
+        }
+        return total;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {4, 2, 5, 1};
+        System.out.println(weightedMoveSum(arr));  // 16
+    }
+}
