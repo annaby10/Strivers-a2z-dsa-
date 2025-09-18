@@ -1,0 +1,47 @@
+import java.util.*;
+
+public class BuildTreePreorder {
+    static class Node {
+        int data;
+        Node left, right;
+
+        Node(int data) {
+            this.data = data;
+            left = right = null;
+        }
+    }
+
+    static int idx = -1; // global index for preorder traversal
+
+    // Build tree from preorder array
+    static Node buildTree(int[] preorder) {
+        idx++;
+        if (preorder[idx] == -1) {
+            return null;
+        }
+
+        Node root = new Node(preorder[idx]);
+        root.left = buildTree(preorder);
+        root.right = buildTree(preorder);
+
+        return root;
+    }
+
+    // Print tree in inorder (for verification)
+    static void inorder(Node root) {
+        if (root == null) return;
+        inorder(root.left);
+        System.out.print(root.data + " ");
+        inorder(root.right);
+    }
+
+    public static void main(String[] args) {
+        // Example: preorder = [1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1]
+        int[] preorder = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
+
+        Node root = buildTree(preorder);
+
+        System.out.println("Inorder traversal of tree:");
+        inorder(root);
+    }
+}
